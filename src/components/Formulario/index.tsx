@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { IEvento } from '../../interfaces/IEvento';
+import { useAdicionarEvento } from '../../state/hooks/useAdicionarEvento';
 import style from './Formulario.module.scss';
 
-const Formulario: React.FC<{ aoSalvar: (evento: IEvento) => void }> = ({ aoSalvar }) => {
+const Formulario: React.FC = () => {
+  const adicionarEvento = useAdicionarEvento();
   const [descricao, setDescricao] = useState('')
   const [dataInicio, setDataInicio] = useState('')
   const [horaInicio, setHoraInicio] = useState('')
@@ -14,19 +15,28 @@ const Formulario: React.FC<{ aoSalvar: (evento: IEvento) => void }> = ({ aoSalva
     return new Date(`${dataString}T${hora}`)
   }
 
-  const submeterForm = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    aoSalvar({
-      descricao,
-      inicio: montarData(dataInicio, horaInicio),
-      fim: montarData(dataFim, horaFim),
-      completo: false
-    })
+  const limparForm = () => {
     setDescricao('')
     setDataInicio('')
     setHoraInicio('')
     setDataFim('')
     setHoraFim('')
+  }
+
+  const submeterForm = (event: React.FormEvent<HTMLFormElement>) => {
+    try {
+      event.preventDefault()
+      const evento = {
+        descricao,
+        inicio: montarData(dataInicio, horaInicio),
+        fim: montarData(dataFim, horaFim),
+        completo: false
+      }
+      adicionarEvento(evento);
+      limparForm();
+    } catch (erro) {
+      alert(erro);
+    }
   }
   return (<form className={style.Formulario} onSubmit={submeterForm}>
     <h3 className={style.titulo}>Novo evento</h3>
