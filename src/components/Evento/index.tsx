@@ -1,7 +1,5 @@
 import React from 'react';
-import { useSetRecoilState } from 'recoil';
 import { IEvento } from '../../interfaces/IEvento'
-import { listaDeEventosState } from '../../state/atom';
 import { useExcluirEvento } from '../../state/hooks/useExcluirEvento';
 import style from './Evento.module.scss';
 import EventoCheckbox from './EventoCheckbox';

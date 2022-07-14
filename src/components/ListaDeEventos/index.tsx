@@ -1,7 +1,4 @@
 import React from 'react';
-import { useRecoilValue } from 'recoil';
-import { IFiltroDeEventos } from '../../interfaces/IFiltroDeEventos';
-import { filtroDeEventos } from '../../state/atom';
 import { useListaDeEventos } from '../../state/hooks/useListaDeEventos';
 import Evento from '../Evento';
 import Filtro from '../Filtro';
